@@ -179,9 +179,11 @@ def evaluate(model, Bot, Environment, runs=10, seed=None, debug=False):
                     graphics["energy"].set_segments([[(0.1, 0.1),(0.9, 0.1)],
                                                      [(0.1, 0.1),(0.9, 0.1)]])            
                 graphics["camera"].set_data(bot.camera.framebuffer)
+                bot.camera.render(bot.position, bot.direction,
+                              environment.world, environment.colormap)
                 plt.pause(1/60)
 
-            scores.append (distance)
+        scores.append(distance)
 
     return np.mean(scores), np.std(scores)
 

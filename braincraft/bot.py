@@ -17,11 +17,11 @@ class Bot:
     speed: float                   = 0.01
     camera: Camera                 = Camera(fov=60, resolution=64)
     hit: int                       = 0
-    energy: int                    = 1000
+    energy: int                    = 1
     energy_min: int                = 0
-    energy_max: int                = 1000
-    energy_move: int               = 1
-    energy_hit: int                = 5
+    energy_max: int                = 1
+    energy_move: float             = 1/1000
+    energy_hit: float              = 5/1000
 
 
     def __post_init__(self):
