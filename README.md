@@ -210,7 +210,7 @@ below.
 Author     | Date       | File        | Score                  | Seed   | Description
 ---------- | ---------- | ----------- | -----------------------|------- | -------------------------
 [@rougier] | 07/06/2025 | [manual.py] | **15.00** (single run) | None   | Manual player (reference)
-[@rougier] | 01/06/2025 | [random.py] |  **1.05** ±  0.54       | 12345  | Stupid random bot
+[@rougier] | 24/07/2025 | [random.py] |  **1.46** ±  0.54      | 12345  | Stupid random bot
 
 
 [@rougier]: https://github.com/rougier
