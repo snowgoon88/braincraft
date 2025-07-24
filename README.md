@@ -151,17 +151,17 @@ a number of state variables:
     - `camera.values` (walls color, n=resolution=64)
  - `position` (initially 0.5, 0.5, task dependent)
  - `direction` (inititally 90° ± 5°, task dependent)
- - `energy` (initially 1000)
- - `move_penalty` (constant, 1)
- - `hit_penalty` (constant, 5)
+ - `energy` (initially 1)
+ - `move_penalty` (constant, 1/1000)
+ - `hit_penalty` (constant, 5/1000)
 
 as well as the Environment (task dependent) class that also gives access to energy sources:
 
- - `energy` (initially 2000)
+ - `energy` (initially 2)
  - `probability` (constant, 1.0, task & source dependent)
  - `quality` (constant, 1.0, task & source dependent)
- - `leak` (constant, 2)
- - `refill` (constant, 5)
+ - `leak` (constant, 2/1000)
+ - `refill` (constant, 5/1000)
 
 These variables can be read (and possibly modified) during training but they won't be accessible during testing (no reading, no writing). To actually move the bot, you need to call the `forward` method. This method first changes the direction of the bot and then move it forward and update the internal state (sensors, hit detection, energy consumption). The evaluation method has also a debug flag that may be helpful to visualize the behavior of your model (see Figure 2).
 
@@ -210,7 +210,7 @@ below.
 Author     | Date       | File        | Score                  | Seed   | Description
 ---------- | ---------- | ----------- | -----------------------|------- | -------------------------
 [@rougier] | 07/06/2025 | [manual.py] | **15.00** (single run) | None   | Manual player (reference)
-[@rougier] | 01/06/2025 | [random.py] |  **0.62** ± 0.37       | 12345  | Stupid random bot
+[@rougier] | 01/06/2025 | [random.py] |  **1.05** ±  0.54       | 12345  | Stupid random bot
 
 
 [@rougier]: https://github.com/rougier

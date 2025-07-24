@@ -15,12 +15,12 @@ class Source:
     by a negative number (identity).
     """
 
-    identity: int                   # Identity of the source (mandatory & negative)
-    energy: int        = 2000       # Initial energy level
-    probability: float = 1.0        # Probability of refill
-    quality: int       = 1          # Quality of the source (1, 2, or 3)
-    leak: int          = 2          # Source leak per iteration
-    refill: int        = 5          # Refill amount for the bot
+    identity: int                       # Identity of the source (mandatory & negative)
+    energy: int         = 2             # Initial energy level
+    probability: float  = 1.0           # Probability of refill
+    quality: int        = 1             # Quality of the source (1, 2, or 3)
+    leak: float         = 2/1000        # Source leak per iteration
+    refill: float       = 5/1000        # Refill amount for the bot
 
     def update(self):
         """Update source energy level"""
