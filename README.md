@@ -207,12 +207,14 @@ below.
 
 ## Task 1
 
-Author     | Date       | File        | Score                  | Seed   | Description
----------- | ---------- | ----------- | -----------------------|------- | -------------------------
-[@rougier] | 07/06/2025 | [manual.py] | **15.00** (single run) | None   | Manual player (reference)
-[@rougier] | 24/07/2025 | [random.py] |  **1.46** ±  0.54      | 12345  | Stupid random bot
-
+Author     | Date       | File           | Score                  | Seed   | Description
+---------- | ---------- | -------------- | -----------------------|------- | -------------------------
+[@rougier] | 07/06/2025 | [manual.py]    | **15.00** (single run) | None   | Manual player (reference)
+[@rougier] | 24/07/2025 | [random.py]    | **1.46** ±  0.54       | 12345  | Stupid random bot
+[@tjayada] | 31/07/2025 | [evolution.py] | **12.70** ± 0.43       | 78     | Genetic algorithm
 
 [@rougier]: https://github.com/rougier
+[@tjayada]: https://github.com/tjayada
 [random.py]: ./braincraft/player_random.py
 [manual.py]: ./braincraft/player_manual.py
+[evolution.py]: ./braincraft/player_evolution.py

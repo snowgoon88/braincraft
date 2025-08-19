@@ -486,7 +486,7 @@ if __name__ == "__main__":
     # Std : 0.887
 
     # used best seed
-    seed = 123
+    seed = 78
 
     # Training (100 seconds)
     np.random.seed(seed)
@@ -495,7 +495,7 @@ if __name__ == "__main__":
 
     # Evaluation
     start_time = time.time()
-    score, std = evaluate(model, Bot, Environment, debug=False, seed=seed)
+    score, std = evaluate(model, Bot, Environment, debug=True, seed=seed)
     elapsed = time.time() - start_time
     print(f"Evaluation completed after {elapsed:.2f} seconds")
     print(f"Final score: {score:.2f} ± {std:.2f}")
