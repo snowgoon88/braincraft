@@ -112,13 +112,14 @@ def simple_player():
             model_best = model
         yield model_best
         
-    
     yield model
     
 if __name__ == "__main__":
     import time
     import numpy as np    
     from challenge import train, evaluate
+    
+    seed = None
     
     # Training (100 seconds)
     print(f"Starting training for 100 seconds (user time)")
@@ -133,7 +134,7 @@ if __name__ == "__main__":
     
     # Evaluation
     start_time = time.time()
-    score, std = evaluate(model, Bot, Environment, runs=6, debug=True, seed=None)
+    score, std = evaluate(model, Bot, Environment, runs=10, debug=False, seed=seed)
     elapsed = time.time() - start_time
     print(f"Evaluation completed after {elapsed:.2f} seconds")
     print(f"Final score: {score:.2f} ± {std:.2f}")
