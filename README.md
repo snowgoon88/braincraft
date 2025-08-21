@@ -212,9 +212,12 @@ Author     | Date       | File           | Score                  | Seed   | Des
 [@rougier] | 07/06/2025 | [manual.py]    | **15.00** (single run) | None   | Manual player (reference)
 [@rougier] | 24/07/2025 | [random.py]    | **1.46** ±  0.54       | 12345  | Stupid random bot
 [@tjayada] | 31/07/2025 | [evolution.py] | **12.70** ± 0.43       | 78     | Genetic algorithm
+[@vforch]  | 21/08/2025 | [simple.py]    | **13.71** ± 0.46       | 78     | Handcrafted weights
 
 [@rougier]: https://github.com/rougier
 [@tjayada]: https://github.com/tjayada
+[@vforch]: https://github.com/vforch
+[simple.py]:  ./braincraft/player_simple.py
 [random.py]: ./braincraft/player_random.py
 [manual.py]: ./braincraft/player_manual.py
 [evolution.py]: ./braincraft/player_evolution.py
