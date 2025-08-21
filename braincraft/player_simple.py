@@ -1,4 +1,5 @@
 # Braincraft challenge entry — 1000 neurons, 100 seconds, 10 runs, 2 choices, no reward
+# by Valentin Forch
 """
 Example and evaluation of the performances of a random player.
 """
@@ -80,7 +81,7 @@ def simple_player():
     model_best = None
     while True:
         
-        model_values = np.random.uniform(0, 1, 7)
+        model_values = np.random.uniform(0, 1, 2)
             
         # input parameters
         exc_input = model_values[0]
