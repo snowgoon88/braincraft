@@ -1,7 +1,7 @@
 # Braincraft challenge entry — 1000 neurons, 100 seconds, 10 runs, 2 choices, no reward
-# by Valentin Forch
+# by Alain Dutech
 """
-Example and evaluation of the performances of a random player.
+Example and evaluation of the performances of a handcrafter switcher player.
 """
 
 from bot import Bot
