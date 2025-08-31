@@ -111,7 +111,7 @@ def switcher_player():
 if __name__ == "__main__":
     import time
     import numpy as np    
-    from challenge_verb import train, evaluate
+    from challenge import train, evaluate
     
     seed = 78
     np.random.seed(seed)
@@ -123,7 +123,7 @@ if __name__ == "__main__":
 
     # Evaluation
     start_time = time.time()
-    score, std = evaluate(model, Bot, Environment, runs=10, debug=True, seed=seed )
+    score, std = evaluate(model, Bot, Environment, runs=10, debug=False, seed=seed )
     elapsed = time.time() - start_time
     print(f"Evaluation completed after {elapsed:.2f} seconds")
     print(f"Final score: {score:.2f} ± {std:.2f}")
