@@ -207,19 +207,22 @@ below.
 
 ## Task 1
 
-Author     | Date       | File           | Score                  | Seed   | Description
----------- | ---------- | -------------- | -----------------------|------- | -------------------------
-[@rougier] | 07/06/2025 | [manual.py]    | **15.00** (single run) | None   | Manual player (reference)
-[@rougier] | 24/07/2025 | [random.py]    | **1.46** ±  0.54       | 12345  | Stupid random bot
-[@tjayada] | 31/07/2025 | [evolution.py] | **12.70** ± 0.43       | 78     | [Genetic algorithm]
-[@vforch]  | 21/08/2025 | [simple.py]    | **13.71** ± 0.46       | 78     | [Handcrafted weights]
+Author        | Date       | File           | Score                  | Seed   | Description
+------------- | ---------- | -------------- | -----------------------|------- | -------------------------
+[@rougier]    | 07/06/2025 | [manual.py]    | **15.00** (single run) | None   | Manual player (reference)
+[@rougier]    | 24/07/2025 | [random.py]    | **1.46** ±  0.54       | 12345  | Stupid random bot
+[@tjayada]    | 31/07/2025 | [evolution.py] | **12.70** ± 0.43       | 78     | [Genetic algorithm]
+[@vforch]     | 21/08/2025 | [simple.py]    | **13.71** ± 0.46       | 78     | [Handcrafted weights]
+[@snowgoon88] | 28/08/2025 | [switcher.py]  | **11.39** ± 3.56       | 78     | [Handcrafted weights]
 
 [@rougier]: https://github.com/rougier
 [@tjayada]: https://github.com/tjayada
+[@snowgoon88]: https://github.com/@snowgoon88
 [@vforch]: https://github.com/vforch
 [simple.py]:  ./braincraft/player_simple.py
 [random.py]: ./braincraft/player_random.py
 [manual.py]: ./braincraft/player_manual.py
+[switcher.py]:  ./braincraft/player_switcher.py
 [evolution.py]: ./braincraft/player_evolution.py
 [Genetic algorithm]: https://github.com/rougier/braincraft/pull/5
 [Handcrafted weights]: https://github.com/rougier/braincraft/pull/7
