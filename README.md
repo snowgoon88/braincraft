@@ -212,9 +212,9 @@ Author        | Date       | File           | Score                  | Seed   | 
 [@rougier]    | 07/06/2025 | [manual.py]    | **15.00** (single run) | None   | Manual player (reference)
 [@rougier]    | 24/07/2025 | [random.py]    | **1.46** ±  0.54       | 12345  | Stupid random bot
 [@tjayada]    | 31/07/2025 | [evolution.py] | **12.70** ± 0.43       | 78     | [Genetic algorithm]
-[@vforch]     | 21/08/2025 | [simple.py]    | **13.71** ± 0.46       | 78     | [Handcrafted weights]
-[@snowgoon88] | 28/08/2025 | [switcher.py]  | **11.39** ± 3.56       | 78     | [Handcrafted weights]
-[@vforch],[@snowgoon88] | 31/08/2025 | [switcher_alt.py]  | **14.71** ± 0.46   | 78     | [Handcrafted weights]
+[@vforch]     | 21/08/2025 | [simple.py]    | **13.71** ± 0.46       | 78     | [Handcrafted weights 1]
+[@snowgoon88] | 28/08/2025 | [switcher.py]  | **11.39** ± 3.56       | 78     | [Handcrafted weights 2]
+[@vforch],[@snowgoon88] | 31/08/2025 | [switcher_alt.py]  | **14.71** ± 0.46   | 78     | [Handcrafted weights 3]
 
 [@rougier]: https://github.com/rougier
 [@tjayada]: https://github.com/tjayada
@@ -227,4 +227,6 @@ Author        | Date       | File           | Score                  | Seed   | 
 [switcher_alt.py]:  ./braincraft/player_switcher_alt.py
 [evolution.py]: ./braincraft/player_evolution.py
 [Genetic algorithm]: https://github.com/rougier/braincraft/pull/5
-[Handcrafted weights]: https://github.com/rougier/braincraft/pull/7
+[Handcrafted weights 1]: https://github.com/rougier/braincraft/pull/7
+[Handcrafted weights 2]: https://github.com/rougier/braincraft/pull/8
+[Handcrafted weights 3]: https://github.com/rougier/braincraft/pull/8#issuecomment-3238121164
