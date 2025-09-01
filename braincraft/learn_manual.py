@@ -213,18 +213,57 @@ class NN_env_simu:
 # ***************************************************************** GraphUpdater
 # ******************************************************************************
 class GraphUpdater:
-    def __init__(self, nn_model, X_indices):
+    def __init__(self, nn_model, info ):
+        """
+        nn_model = W_in, W, W_out, warmup, leak, f, g
+        info = { layer_name: {ax, indices, labels, lim} }
+        """
         self.nn = nn_model
-        self.mem_time = []
-        self.mem_X = None
-        self.idX = X_indices
-        self.lim_X = [-1, 1]
+        self.info = info
 
-    def gen_matplot_lines(self, ax, indices, labels):
-        nb_lines = len(indices)
+        self.mem_time = []
+        self.mem_I = None
+        self.mem_X = None
+
+        for _, info_layer in self.info.items():
+            self.gen_matplot_lines( info_layer )
+
+    def gen_matplot_lines(self, info_layer ):
+        idx, labels, lim = info_layer["indices"], info_layer["labels"], info_layer["lim"]
+        ax = info_layer["ax"]
+
+        nb_lines = len(idx)
         x_data = np.zeros( (1,) )
-        y_data = np.zeros( (1,nb_lines) )
-        return ax.plot( x_data, y_data, label=labels )
+        y_data = np.zeros( (1, nb_lines) )
+        ax.set_ylim( lim[0], lim[1] )
+        info_layer["lines"] = ax.plot( x_data, y_data, label=labels )
+
+    def store_and_plot_data(self, mem, data, info_layer ):
+        ax = info_layer["ax"]
+        lines = info_layer["lines"]
+        idx, labels, lim = info_layer["indices"], info_layer["labels"], info_layer["lim"]
+
+        if mem is None:
+            mem = data[idx, :].transpose()
+        else:
+            mem = np.concatenate( (mem, data[idx, :].transpose()) )
+
+        for (i, line) in enumerate( lines ):
+            line.set_data( self.mem_time, mem[:,i] )
+
+        rescale = False
+        if np.max(mem) > lim[1]:
+            lim[1] = 1.1 * np.max(mem)
+            rescale = rescale or True
+        if np.min(mem) < lim[0]:
+            lim[O] = 1.1 * np.min(mem)
+            rescale = rescale or True
+        if rescale:
+            ax.set_ylim( bottom=lim[0], top=lim[1] )
+            info_layer["lim"] = lim
+
+        return mem
+
 
     def update(self, frame=0, nn=None):
         """ Update display, bot and stats. """
@@ -244,29 +283,17 @@ class GraphUpdater:
         # print( f"memX = {X[self.idX, :]}, shape:{X[self.idX, :].shape}" )
 
         self.mem_time.append(time_simu)
-        if self.mem_X is None:
-            self.mem_X = X[self.idX, :].transpose()
-        else:
-            self.mem_X = np.concatenate( (self.mem_X, X[self.idX, :].transpose()) )
-
-        # print( f"mem_t={self.mem_time}" )
-        # print( f"mem_X={self.mem_X}, shape={self.mem_X.shape}" )
+        self.mem_I = self.store_and_plot_data( self.mem_I, I, self.info["input"])
+        self.mem_X = self.store_and_plot_data( self.mem_X, X, self.info["nx"])
+        self.mem_O = self.store_and_plot_data( self.mem_O, O, self.info["output"])
 
         graphics["rays"].set_segments(bot.camera.rays)
         graphics["hits"].set_offsets(bot.camera.rays[:,1,:])
         graphics["bot"].set_center(bot.position)
 
-        # graphics["nn_output"].set_data( mem_time, mem_output )
-        for (i, line) in enumerate( graphics["nn_x"] ):
-            line.set_data( self.mem_time, self.mem_X[:,i] )
-        # graphics["nn_x"].set_data( self.mem_time, self.mem_X )
-        # graphics["nn_x0"].set_data( mem_time, mem_x0 )
-        # graphics["nn_x1"].set_data( mem_time, mem_x1 )
         graphics["ax2"].set_xlim( left=-5, right=time_simu+10 )
-        if np.max(self.mem_X) > self.lim_X[1]:
-            self.lim_X[1] = 1.1 * np.max(self.mem_X)
-            graphics["ax2"].set_ylim( bottom=self.lim_X[0], top=self.lim_X[1] )
-        graphics["ax2"].legend( loc='best' )
+        for _, info_layer in self.info.items():
+            info_layer["ax"].legend( loc='best' )
 
         if energy < bot.energy:
             graphics["energy"].set_color( ("black", "white", "C2") )
@@ -282,6 +309,7 @@ class GraphUpdater:
             graphics["energy"].set_segments([[(0.1, 0.05),(0.9, 0.05)],
                                              [(0.1, 0.05),(0.9, 0.05)]])
             anim.event_source.stop()
+# ******************************************************************************
 
 if __name__ == "__main__":
     from bot import Bot
@@ -303,19 +331,41 @@ if __name__ == "__main__":
     model = switcher_player()
     simu = NN_env_simu( model, bot, environment )
     n = bot.camera.resolution
+    i_left = 0
+    i_right = n - 1
+    i_center_right = n - 31
     i_nrj = n + 1
     i_filter = i_nrj + 10
     i_turn = i_filter + 10
     i_turn_mid = i_turn+10
-    idx = [i_filter+2, i_turn_mid+1]
-    gu = GraphUpdater( simu, idx )
 
     fig = plt.figure(figsize=(6,2.5))
     ax1 = plt.axes([0.0,0.0,1/2,1.0], aspect=1, frameon=False)
     ax1.set_xlim(0,1), ax1.set_ylim(0,1), ax1.set_axis_off()
-    # ax2 for plotting values
-    ax2 = plt.axes([1/2+0.05,0.05,1/2-0.1,0.9], aspect='auto',frameon=True)
-    ax2.set_ylim( bottom=gu.lim_X[0], top=gu.lim_X[1] )
+    # ax2 for plotting X and O values
+    ax2 = plt.axes([1/2+0.05, 1/3.0, 1/2-0.1, 2/3.0-0.05-0.1], aspect='auto',frameon=True)
+    # ax3 for plotting I values
+    ax3 = plt.axes([1/2+0.05, 0.05, 1/2-0.1, 1/3-0.05], aspect='auto', frameon=True,
+                   sharex=ax2)
+    # ax4 for ploting O values
+    ax4 = plt.axes([1/2+0.05, 0.85, 1/2-0.1, 0.1], aspect='auto', frameon=True,
+                   sharex=ax2)
+
+    info_graph = {
+        "input":  { "ax":      ax3,
+                    "indices": [i_left, i_right, i_center_right, i_nrj],
+                    "labels":  ["L", "R", "C", "nrj"],
+                    "lim":     [-0.05, 1.05]},
+        "nx":     { "ax":      ax2,
+                    "indices": [i_filter+2, i_turn_mid+1],
+                    "labels":  ["X_f", "X_t"],
+                    "lim":     [-0.05, 1.05] },
+        "output": { "ax":      ax4,
+                    "indices": [0],
+                    "labels":  ["out"],
+                    "lim":     [-5.1, 5.1] },
+        }
+    gu = GraphUpdater( simu, info_graph )
 
     graphics = {
         "topview" : ax1.imshow(environment.world_rgb, interpolation="nearest", origin="lower",
@@ -334,10 +384,8 @@ if __name__ == "__main__":
                            color=("black", "white", "C1"), linewidth=(20,18,12),
                            capstyle="round", zorder=150)),
         "ax2": ax2,
-        "nn_x": gu.gen_matplot_lines(ax2, idx, ["X_f", "X_t"]),
-        # "nn_output": lines_nn_out,
-        # "nn_x0": lines_nn_x0,
-        # "nn_x1": lines_nn_x1,
+        "ax3": ax3,
+        "ax4": ax4,
     }
 
     print("The manual player is controlled by left and right arrows")
