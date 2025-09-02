@@ -4,13 +4,15 @@
 Example and evaluation of the performances of a handcrafter switcher player.
 """
 
+import numpy as np
+
 from bot import Bot
 from environment_1 import Environment
 
 # ** activation functions ******************************************************
 def ReLU(x):
     return np.clip(x, a_min=0, a_max=None)
-    
+
 def identity(x):
     return x
 
@@ -43,7 +45,7 @@ def switcher_player():
     # weights
     W_in = np.zeros((dim_res, dim_input)  )
     W = np.zeros((dim_res, dim_res))
-    W_out = np.zeros((1,dim_res))
+    W_out = np.zeros((1, dim_res))
 
     # TurnLeft (away from SensorRight)
     W_in[1, i_right] = 1.0
@@ -62,8 +64,8 @@ def switcher_player():
     W[i_nrj+2, i_nrj+1] = - 1.0
     # need a band-filter so as to only detect "small" NRJ bumps
     # (and not the starting bump with value '1')
-    W[i_filter, i_nrj+2] = 1.0
-    W[i_filter, i_bias]  = -0.004
+    W[i_filter, i_nrj+2]   = 1.0
+    W[i_filter, i_bias]    = -0.004
     W[i_filter+1, i_nrj+2] = 1.0
     # i_filter+2 accumulate and "memorise" reward increase
     W[i_filter+2, i_filter]   = -2.0
@@ -79,7 +81,7 @@ def switcher_player():
     # cumulate i_left < 0.40 when rewarded
     W_in[i_turn_mid, i_left] = -1.0
     W_in[i_turn_mid, i_bias] = 0.45
-    W[i_turn_mid, i_filter+3] = -10 # do not detect if no reward received yet
+    W[i_turn_mid, i_filter+3] = -10  # do not detect if no reward received yet
     # accumulate diff
     W[i_turn_mid+1, i_turn_mid] = 1.6
     W[i_turn_mid+1, i_turn_mid+1] = 1.07
@@ -100,22 +102,68 @@ def switcher_player():
     # finaly, apply to output
     W_out[0, i_turn_mid+2] = 100
 
-    f = lambda x: ReLU( x )
+    f = ReLU
     g = identity
     model = W_in, W, W_out, warmup, leak, f, g
 
     yield model
     return model
 
+def generate_info_json():
+    """Generate information for 'debug_plot', json format.
+    """
+    import json
+
+    bot = Bot()
+    dim_cam = bot.camera.resolution
+    dim_input = dim_cam + 3
+    # indexes for some input and X neurones
+    i_left = 0
+    i_right = dim_cam - 1
+    i_center_right = dim_cam - 31
+    i_nrj = dim_input - 2
+    i_filter = i_nrj + 10
+    i_turn = i_filter + 10
+    i_turn_mid = i_turn+10
+
+    info = {
+        "player": {
+            "module": "player_switcher",
+            "func":   "switcher_player"
+        },
+        "neurons": {
+            "nni": {
+                "indices": [i_left, i_right, i_center_right, i_nrj],
+                "labels":  ["L", "R", "C", "nrj"],
+                "lim":     [-0.05, 1.05]
+            },
+            "nnx": {
+                "indices": [i_filter+2, i_turn_mid+1],
+                "labels":  ["X_f", "X_t"],
+                "lim":     [-0.05, 1.05]
+            },
+            "nno": {
+                "indices": [0],
+                "labels":  ["out"],
+                "lim":     [-6.1, 6.1]
+            }
+        }
+    }
+
+    print( "info for using debug_plot" )
+    print( json.dumps(info) )
+
 
 if __name__ == "__main__":
     import time
-    import numpy as np    
     from challenge import train, evaluate
-    
+
     seed = 78
     np.random.seed(seed)
-    
+
+    # comment if not needed
+    generate_info_json()
+
     # Training (100 seconds)
     timeout_train = 100
     print(f"Starting training for {timeout_train} seconds (user time)")
@@ -127,4 +175,3 @@ if __name__ == "__main__":
     elapsed = time.time() - start_time
     print(f"Evaluation completed after {elapsed:.2f} seconds")
     print(f"Final score: {score:.2f} ± {std:.2f}")
-

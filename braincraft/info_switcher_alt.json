@@ -1,0 +1,23 @@
+{
+    "player": {
+        "module": "player_switcher_alt",
+        "func": "switcher_player"
+    },
+    "neurons": {
+        "nni": {
+            "indices": [0, 63, 65],
+            "labels": ["L", "R", "nrj"],
+            "lim": [-0.05, 1.05]
+        },
+        "nnx": {
+            "indices": [129, 130],
+            "labels": ["fr", "dr"],
+            "lim": [-0.05, 1.05]
+        },
+        "nno": {
+            "indices": [0],
+            "labels": ["out"],
+            "lim": [-6.1, 6.1]
+        }
+    }
+}

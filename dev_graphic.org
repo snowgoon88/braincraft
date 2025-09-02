@@ -4,9 +4,20 @@ develop some tools to help understand solutions.
 - from player => overview visu + plotting of some network values
                  save as movie ?
                  save network activity ?
-* Current: visualization of player
-* [0/1] player_viz
-** TODO [/] overview + plotting of some network values
-** save as movie
-** save networkactivity
-* [/] visualization of network
+** Install
+python3 -m venv env_braincraft
+source env_braincraft/bin/activate
+python -m pip install -t requirements.txt
+
+ou
+
+python -m pip install numpy matplotlib tqdm
+** usage
+python debug_plot.py info_switcher_alt.json
+* Current: visu of network
+* [1/1] player_viz
+** DONE [/] overview + plotting of some network values
+** save as movie => see matplotlib.FuncAnimation
+** save network activity
+* [0/1] visualization of network
+** TODO use pydot to generate graph
