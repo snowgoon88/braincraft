@@ -1,0 +1,12 @@
+* Goal
+develop some tools to help understand solutions.
+- from model  => visualization of network (using graphviz/dot)
+- from player => overview visu + plotting of some network values
+                 save as movie ?
+                 save network activity ?
+* Current: visualization of player
+* [0/1] player_viz
+** TODO [/] overview + plotting of some network values
+** save as movie
+** save networkactivity
+* [/] visualization of network
