@@ -19,5 +19,7 @@ python debug_plot.py info_switcher_alt.json
 ** DONE [/] overview + plotting of some network values
 ** save as movie => see matplotlib.FuncAnimation
 ** save network activity
-* [0/1] visualization of network
-** TODO use pydot to generate graph
+* [3/3] visualization of network
+** DONE use pydot to generate graph
+** DONE detect from_nodes, to_nodes and non-nul weights from W matrix
+** DONE import model and play
